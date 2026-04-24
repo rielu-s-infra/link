@@ -8,8 +8,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: rielu-links2
-  minReplicas: 1
-  maxReplicas: 10
   metrics:
     - type: Resource
       resource:
