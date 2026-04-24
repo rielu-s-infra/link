@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ImageUpdater
 metadata:
   name: rielu-links2
-  namespace: rielu-links2
+  namespace: argocd
   annotations:
     # Image Updaterの設定（注釈として記述）
     argocd-image-updater.argoproj.io/image-list: rielu-links2=docker.io/rieluinfra/rielu-links2
