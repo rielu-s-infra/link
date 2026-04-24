@@ -7,7 +7,9 @@ spec:
   selector:
     matchLabels:
       app: rielu-links2
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
