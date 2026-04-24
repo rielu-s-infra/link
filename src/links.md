@@ -1,8 +1,5 @@
-#  about me
--インフラエンジニアです。  
-- 詳しくは公式サイトにて
 # 🖼 プロフィール画像URL
-/avatar.png
+https://rielulink.uniproject.jp/avatar.png
 
 # 🔗 リンク
 - [GitHub](https://github.com/penti-nameko) {icon: Github}
