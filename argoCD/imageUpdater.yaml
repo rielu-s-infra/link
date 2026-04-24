@@ -1,24 +1,24 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
 kind: ImageUpdater
 metadata:
-  name: rielu-links2
-  namespace: argocd
-  annotations:
-    # Image Updaterの設定（注釈として記述）
-    argocd-image-updater.argoproj.io/image-list: rielu-links2=docker.io/rieluinfra/rielu-links2
-    argocd-image-updater.argoproj.io/rielu-links2.update-strategy: latest
-    argocd-image-updater.argoproj.io/rielu-links2.allow-tags: regexp:^sha-[a-f0-9]{7}$
-    argocd-image-updater.argoproj.io/write-back-method: git
+  name: rielu-links2-updater
+  namespace: rielu-links2
+  labels:
+    app: rielu-links2
 spec:
-  project: rielu-links2
-  source:
-    repoURL: 'https://github.com/rielu-s-infra/rielu-links2.git' # ←ここを書き換え
-    targetRevision: main
-    path: 'argoCD' # ←ここを書き換え
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: rielu-links2 # ←デプロイ先のNamespace
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  applicationRefs:
+  - images:
+    - alias: app
+      commonUpdateSettings:
+        forceUpdate: false
+        updateStrategy: latest
+      imageName: docker.io/rieluinfra/rielu-links2
+      allowTags: regexp:^sha-[a-f0-9]{7}$
+    namePattern: rielu-links2
+    useAnnotations: false
+  writeBackConfig:
+    gitConfig:
+      branch: main
+      repository: https://github.com/rielu-s-infra/rielu-links2.git
+      writeBackTarget: kustomize:./argoCD
+    method: git
