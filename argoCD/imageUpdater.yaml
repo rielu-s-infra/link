@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ImageUpdater
 metadata:
   name: rielu-links2
   namespace: rielu-links2
