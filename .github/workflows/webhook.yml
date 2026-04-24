@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait before notifying
-        run: sleep 30  # 待機秒数（必要に応じて変更）
+        run: sleep 80  # 待機秒数（必要に応じて変更）
 
       - name: Send webhook to ArgoCD
         run: |
