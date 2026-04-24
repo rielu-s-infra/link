@@ -114,57 +114,37 @@ export default function Page() {
           flex-direction: column;
         }
 
-        /* 1. 中央寄せをやめて、画面の横幅をフルに使う */
-          .main-layout {
-            display: flex;
-            gap: 40px;
-            max-width: 100%; /* ← ここを100%にする */
-            margin: 0;      /* ← 左寄せにする */
-            padding: 60px 40px;
-            align-items: start;
-          }
-
-          /* 2. リンクグリッドを限界まで広げる */
-          .links-grid { 
-            flex-grow: 1;
-            display: grid; 
-            /* 画面が広ければ4列、5列と無限に増える設定 */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 16px; 
-          }
-
-          /* 3. サイドバーは左側に固定（sticky） */
-          .side-content { 
-            width: 300px; 
-            flex-shrink: 0; 
-            position: sticky; 
-            top: 40px;
-          }
-        
-        .avatar-wrapper { 
-          width: 110px; 
-          height: 110px; 
-          border-radius: 50%; 
-          padding: 4px; 
-          background: linear-gradient(to right, var(--accent), #a855f7); 
-          display: flex; /* 中央寄せ */
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 20px; /* 中央配置と下の余白 */
-          overflow: hidden; /* はみ出しを絶対に許さない */
-          flex-shrink: 0; /* 潰されるのも防ぐ */
+        /* 1. 中央寄せを廃止し、画面の幅を100%使い切る */
+        .main-layout {
+          display: flex;
+          gap: 40px;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 40px; /* 上下の余白を少し詰めてバランス調整 */
+          align-items: start;
         }
 
-        /* 画像本体：親の100%に合わせる */
-        .profile-avatar { 
-          width: 100% !important; 
-          height: 100% !important; 
-          border-radius: 50%; 
-          object-fit: cover; /* 縦横比を維持して切り抜く */
-          display: block;
+        /* 2. サイドバーを左端にしっかり固定 */
+        .side-content { 
+          width: 300px; 
+          flex-shrink: 0; 
+          position: sticky; 
+          top: 40px; /* 画面の一番上に張り付く位置 */
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
         }
 
-        /* プロフィールカード自体の重なり防止 */
+        /* 3. リンクグリッド：右側の「虚無」を埋める */
+        .links-grid { 
+          flex-grow: 1; /* 右側の余白をすべてタイル用にする */
+          display: grid; 
+          /* 画面が広ければ4列、5列と自動で増える魔法の1行 */
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+          gap: 16px; 
+          width: 100%;
+        }
+
         .profile-card { 
           position: relative;
           z-index: 10;
@@ -172,17 +152,43 @@ export default function Page() {
           padding: 30px 20px; 
           border-radius: 24px; 
           border: 1px solid var(--border);
-          overflow: hidden; /* カードからもはみ出させない */
+          overflow: hidden;
+          text-align: center;
         }
 
-        /* Markdown内のpタグに変な余白がつかないようにする */
+        .avatar-wrapper { 
+          width: 110px; 
+          height: 110px; 
+          border-radius: 50%; 
+          padding: 4px; 
+          background: linear-gradient(to right, var(--accent), #a855f7); 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+
+        .profile-avatar { 
+          width: 100% !important; 
+          height: 100% !important; 
+          border-radius: 50%; 
+          object-fit: cover;
+          display: block;
+        }
+
         .profile-text p { 
           margin: 0;
-          color: #e2e8f0; /* 少し明るめの色にして視認性を上げる */
+          color: #e2e8f0;
+          line-height: 1.6;
+          font-size: 0.9rem;
         }
+
         .news-title { font-size: 0.85rem; color: var(--accent); margin-bottom: 12px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
         .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); margin-bottom: 12px; }
 
+        /* タイル自体のデザイン */
         .tile-item { 
           background: var(--card); 
           border: 1px solid var(--border);
@@ -211,6 +217,7 @@ export default function Page() {
           font-size: 0.85rem;
           border-top: 1px solid var(--border);
           background: var(--bg);
+          margin-top: auto;
         }
 
         @media (max-width: 850px) {
