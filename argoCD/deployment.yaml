@@ -7,9 +7,12 @@ spec:
   selector:
     matchLabels:
       app: rielu-links2
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 2
+    maxSurge: 0
   template:
     metadata:
       labels:
