@@ -134,11 +134,32 @@ export default function Page() {
           gap: 20px;
         }
         
-        .profile-card { background: var(--card); padding: 30px; border-radius: 24px; text-align: center; border: 1px solid var(--border); }
-        .avatar-wrapper { border-radius: 50%; padding: 4px; background: linear-gradient(to right, var(--accent), #a855f7); display: inline-block; margin-bottom: 20px; }
-        .profile-avatar { width: 110px; height: 110px; border-radius: 50%; display: block; object-fit: cover; }
-        .profile-text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
+        .profile-card { 
+          background: var(--card); 
+          padding: 30px 20px; /* 左右の余白を少し詰める */
+          border-radius: 24px; 
+          text-align: center; 
+          border: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px; /* 要素間の隙間を作る */
+        }
 
+        /* 自己紹介テキストのスタイル */
+        .profile-text { 
+          font-size: 0.9rem; 
+          color: var(--text-dim); /* ここが暗すぎると見えないので注意 */
+          line-height: 1.6;
+          width: 100%;
+          word-break: break-word; /* 長い文でも改行させる */
+        }
+
+        /* Markdown内のpタグに変な余白がつかないようにする */
+        .profile-text p { 
+          margin: 0;
+          color: #e2e8f0; /* 少し明るめの色にして視認性を上げる */
+        }
         .news-title { font-size: 0.85rem; color: var(--accent); margin-bottom: 12px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
         .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); margin-bottom: 12px; }
 
