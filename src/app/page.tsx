@@ -114,25 +114,32 @@ export default function Page() {
           flex-direction: column;
         }
 
-        .main-layout {
-          display: flex;
-          gap: 40px;
-          max-width: 1200px; /* ← 1000pxから1200pxへ広げる */
-          margin: 0 auto;
-          padding: 80px 24px;
-          align-items: start;
-          width: 100%; /* ← 追加 */
-        }
+        /* 1. 中央寄せをやめて、画面の横幅をフルに使う */
+          .main-layout {
+            display: flex;
+            gap: 40px;
+            max-width: 100%; /* ← ここを100%にする */
+            margin: 0;      /* ← 左寄せにする */
+            padding: 60px 40px;
+            align-items: start;
+          }
 
-        .side-content { 
-          width: 300px; 
-          flex-shrink: 0; 
-          position: sticky; 
-          top: 80px;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
+          /* 2. リンクグリッドを限界まで広げる */
+          .links-grid { 
+            flex-grow: 1;
+            display: grid; 
+            /* 画面が広ければ4列、5列と無限に増える設定 */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 16px; 
+          }
+
+          /* 3. サイドバーは左側に固定（sticky） */
+          .side-content { 
+            width: 300px; 
+            flex-shrink: 0; 
+            position: sticky; 
+            top: 40px;
+          }
         
         .avatar-wrapper { 
           width: 110px; 
@@ -175,14 +182,6 @@ export default function Page() {
         }
         .news-title { font-size: 0.85rem; color: var(--accent); margin-bottom: 12px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
         .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); margin-bottom: 12px; }
-
-        .links-grid { 
-          flex-grow: 1; /* 残りのスペースを全部使う */
-          display: grid; 
-          /* ここが重要：タイルの幅を少し狭めて(240px)、自動で横に並べる */
-          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-          gap: 16px; 
-        }
 
         .tile-item { 
           background: var(--card); 
