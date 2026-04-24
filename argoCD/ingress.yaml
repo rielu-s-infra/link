@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: rielulink.jp
+    - host: rielulink.uniproject.jp
       http:
         paths:
           # フロントエンド（rewriteなし：/assets/xxx がそのまま届く）
@@ -23,5 +23,5 @@ spec:
                   number: 3000
   tls:
     - hosts:
-        - rielulink.jp
+        - rielulink.uniproject.jp
       secretName: rielu-uniproject-jp-tls
