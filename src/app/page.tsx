@@ -134,25 +134,38 @@ export default function Page() {
           gap: 20px;
         }
         
-        .profile-card { 
-          background: var(--card); 
-          padding: 30px 20px; /* 左右の余白を少し詰める */
-          border-radius: 24px; 
-          text-align: center; 
-          border: 1px solid var(--border);
-          display: flex;
-          flex-direction: column;
+        .avatar-wrapper { 
+          width: 110px; 
+          height: 110px; 
+          border-radius: 50%; 
+          padding: 4px; 
+          background: linear-gradient(to right, var(--accent), #a855f7); 
+          display: flex; /* 中央寄せ */
           align-items: center;
-          gap: 15px; /* 要素間の隙間を作る */
+          justify-content: center;
+          margin: 0 auto 20px; /* 中央配置と下の余白 */
+          overflow: hidden; /* はみ出しを絶対に許さない */
+          flex-shrink: 0; /* 潰されるのも防ぐ */
         }
 
-        /* 自己紹介テキストのスタイル */
-        .profile-text { 
-          font-size: 0.9rem; 
-          color: var(--text-dim); /* ここが暗すぎると見えないので注意 */
-          line-height: 1.6;
-          width: 100%;
-          word-break: break-word; /* 長い文でも改行させる */
+        /* 画像本体：親の100%に合わせる */
+        .profile-avatar { 
+          width: 100% !important; 
+          height: 100% !important; 
+          border-radius: 50%; 
+          object-fit: cover; /* 縦横比を維持して切り抜く */
+          display: block;
+        }
+
+        /* プロフィールカード自体の重なり防止 */
+        .profile-card { 
+          position: relative;
+          z-index: 10;
+          background: var(--card); 
+          padding: 30px 20px; 
+          border-radius: 24px; 
+          border: 1px solid var(--border);
+          overflow: hidden; /* カードからもはみ出させない */
         }
 
         /* Markdown内のpタグに変な余白がつかないようにする */
