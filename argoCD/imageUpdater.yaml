@@ -7,6 +7,7 @@ metadata:
     # Image Updaterの設定（注釈として記述）
     argocd-image-updater.argoproj.io/image-list: rielu-links2=docker.io/rieluinfra/rielu-links2
     argocd-image-updater.argoproj.io/rielu-links2.update-strategy: latest
+    argocd-image-updater.argoproj.io/app.allow-tags: regexp:^sha-[a-f0-9]{7}$
     argocd-image-updater.argoproj.io/write-back-method: git
 spec:
   project: default
