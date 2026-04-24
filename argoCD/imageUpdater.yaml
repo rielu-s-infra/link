@@ -12,7 +12,7 @@ metadata:
 spec:
   project: rielu-links2
   source:
-    repoURL: 'https://github.com/rielu-s-infra/rielu-homepage.git' # ←ここを書き換え
+    repoURL: 'https://github.com/rielu-s-infra/rielu-links2.git' # ←ここを書き換え
     targetRevision: main
     path: 'argoCD' # ←ここを書き換え
   destination:
