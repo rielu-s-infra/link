@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rielu-links2
+  namespace: rielu-links2
+spec:
+  selector:
+    matchLabels:
+      app: rielu-links2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rielu-links2
+    spec:
+      containers:
+        - name: app
+          image: docker.io/rieluinfra/rielu-links2:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: default-port
+          resources:
+            requests:
+              cpu: 500m # 必要最低限の0.5CPUを確保
+              memory: 1Gi # 必要最低限の1GiBを確保
+            limits:
+              cpu: 1000m # 最大1CPUまで使用可能
+              memory: 2Gi # 最大2GiBまで使用可能
+          readinessProbe:
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            httpGet:
+              path: /
+              port: default-port
+              httpHeaders:
+                - name: X-k8s-Header
+                  value: readiness
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+            - name: HOST
+              value: "::"
+            - name: HOSTNAME
+              value: "::"

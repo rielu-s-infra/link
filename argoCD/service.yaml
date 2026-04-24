@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rielu-links2-service
+  namespace: rielu-links2
+spec:
+  type: ClusterIP  # ここ（selectorと同じ階層）に配置
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: rielu-links2
