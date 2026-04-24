@@ -1,24 +1,14 @@
 apiVersion: argocd-image-updater.argoproj.io/v1alpha1
 kind: ImageUpdater
 metadata:
-  name: rielu-links2-updater
+  name: rielu-links2
   namespace: argocd
-  labels:
-    app: rielu-links2
 spec:
+  namespace: argocd
   applicationRefs:
-  - images:
-    - alias: app
-      commonUpdateSettings:
-        forceUpdate: false
-        updateStrategy: latest
-        allowTags: regexp:^sha-[a-f0-9]{7}$
-      imageName: docker.io/rieluinfra/rielu-links2
-    namePattern: rielu-links2
-    useAnnotations: false
-  writeBackConfig:
-    gitConfig:
-      branch: main
-      repository: https://github.com/rielu-s-infra/rielu-links2.git
-      writeBackTarget: kustomize:./argoCD
-    method: git
+    - namePattern: "rielu-links2"
+      images:
+        - alias: "rielu-links2"
+          imageName: "docker.io/rieluinfra/rielu-links2"
+          commonUpdateSettings:
+            updateStrategy: "latest"
