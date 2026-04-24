@@ -12,8 +12,8 @@ spec:
       commonUpdateSettings:
         forceUpdate: false
         updateStrategy: latest
+        allowTags: regexp:^sha-[a-f0-9]{7}$
       imageName: docker.io/rieluinfra/rielu-links2
-      allowTags: regexp:^sha-[a-f0-9]{7}$
     namePattern: rielu-links2
     useAnnotations: false
   writeBackConfig:
