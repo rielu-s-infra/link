@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: docker.io/rieluinfra/rielu-links2
-          tag: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: docker.io/rieluinfra/rielu-links2:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
