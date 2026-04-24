@@ -2,22 +2,16 @@ import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import * as Icons from 'lucide-react';
 import mdContent from '../links.md?raw';
+import aboutMd from '../about.md?raw'; // 追加: 自己紹介専用ファイル
 
-// postsフォルダ内のmdファイルをすべて読み込む
 const postFiles = import.meta.glob('../posts/*.md', { query: '?raw', import: 'default' });
 
-/**
- * リンクMarkdown行から情報を抽出する関数
- * 例: "- [GitHub](https://github.com/...) {icon: Github}"
- */
 const parseLinkRow = (row: string) => {
-  // 1. URLとラベルの抽出: [ラベル](URL)
   const linkRegex = /\[(.*?)\]\((.*?)\)/;
   const linkMatch = row.match(linkRegex);
   const label = linkMatch ? linkMatch[1] : '';
   const url = linkMatch ? linkMatch[2] : '#';
 
-  // 2. アイコン名の抽出: {icon: アイコン名}
   const iconRegex = /\{icon:\s*(\w+)\}/;
   const iconMatch = row.match(iconRegex);
   const iconName = iconMatch ? iconMatch[1] : '';
@@ -33,7 +27,6 @@ const IconRenderer = ({ name }: { name: string }) => {
 export default function Page() {
   const [posts, setPosts] = useState<string[]>([]);
 
-  // お知らせの読み込み
   useEffect(() => {
     const fetchPosts = async () => {
       const contents = await Promise.all(Object.values(postFiles).map(fn => fn()));
@@ -42,16 +35,13 @@ export default function Page() {
     fetchPosts();
   }, []);
 
-  // Markdownのパースとセクション分け
-  const sections = mdContent.split('# ').filter(Boolean);
+  // links.mdからは画像URLとリンクだけを抽出する
+  const sections = mdContent.split(/#\s+/).filter(Boolean);
   
-  const introduction = sections.find(s => s.startsWith('📢 自己紹介'))?.replace('📢 自己紹介', '').trim() || '';
+  const avatarSection = sections.find(s => s.includes('プロフィール画像'));
+  const avatarUrl = avatarSection?.split('\n').find(line => line.includes('http'))?.trim() || '';
   
-  const avatarSection = sections.find(s => s.startsWith('🖼 プロフィール画像URL'));
-  const avatarUrl = avatarSection?.split('\n').find(line => line.includes('/'))?.trim() || '';
-  
-  const linksSection = sections.find(s => s.startsWith('🔗 リンク')) || '';
-  // リンクの行（リストアイテム）だけを抽出してパース
+  const linksSection = sections.find(s => s.includes('リンク')) || '';
   const linkRows = linksSection.split('\n').filter(line => line.trim().startsWith('- '));
   const parsedLinks = linkRows.map(row => parseLinkRow(row));
 
@@ -65,14 +55,11 @@ export default function Page() {
               <img src={avatarUrl} alt="Profile" className="profile-avatar" />
             </div>
             <div className="profile-text">
-              <ReactMarkdown>{introduction}</ReactMarkdown>
+              {/* about.md の中身を直接表示 */}
+              <ReactMarkdown>{aboutMd}</ReactMarkdown>
             </div>
           </div>
-        <footer className="footer">
-            <p>© 2026 rielu</p>
-        </footer>
 
-          {/* お知らせセクション */}
           <div className="news-section">
             <h3 className="news-title">Recent Posts</h3>
             {posts.map((post, i) => (
@@ -83,7 +70,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* 右側：リンクタイル（ここをパース済みデータから生成） */}
+        {/* 右側：リンクタイル */}
         <div className="links-grid">
           {parsedLinks.map((link, i) => (
             <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="tile-item">
@@ -97,36 +84,34 @@ export default function Page() {
         </div>
       </div>
 
+      {/* フッターはレイアウトの外側に配置 */}
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} rielu</p>
+      </footer>
+
       <style>{`
-        /* * 全体のリセットと背景設定
-         * 「両脇の線」の正体はここ（親コンポーネント）にあることが多いので、
-         * ここで完全にリセットします。
-         */
         :root {
-          --bg: #030712; /* 超ダークグレー（ほぼ黒） */
-          --card: #111827; /* ダークグレー */
+          --bg: #030712;
+          --card: #111827;
           --card-hover: #1f293a;
-          --accent: #3b82f6; /* 青 */
+          --accent: #3b82f6;
           --text: #ffffff;
           --text-dim: #94a3b8;
           --border: #1f2937;
         }
 
-        /* 謎の線を消すための決定打 */
         body, html, #root { 
           margin: 0; 
           padding: 0; 
           background: var(--bg); 
           color: var(--text); 
-          font-family: sans-serif; 
-          border: none !important; 
-          outline: none !important;
+          font-family: sans-serif;
         }
 
         .fullscreen-container {
           min-height: 100vh;
-          width: 100%;
-          border: none;
+          display: flex;
+          flex-direction: column;
         }
 
         .main-layout {
@@ -136,9 +121,9 @@ export default function Page() {
           margin: 0 auto;
           padding: 80px 20px;
           align-items: start;
+          flex: 1; /* コンテンツが少なくてもフッターを下に押しやる */
         }
 
-        /* サイドバー（プロフィールとお知らせ） */
         .side-content { 
           width: 300px; 
           flex-shrink: 0; 
@@ -153,13 +138,10 @@ export default function Page() {
         .avatar-wrapper { border-radius: 50%; padding: 4px; background: linear-gradient(to right, var(--accent), #a855f7); display: inline-block; margin-bottom: 20px; }
         .profile-avatar { width: 110px; height: 110px; border-radius: 50%; display: block; object-fit: cover; }
         .profile-text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; }
-        .profile-text p { margin-bottom: 8px; }
 
         .news-title { font-size: 0.85rem; color: var(--accent); margin-bottom: 12px; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
-        .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); }
-        .news-card h1 { font-size: 1rem; color: var(--text); margin-bottom: 4px; }
+        .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); margin-bottom: 12px; }
 
-        /* リンクグリッド（タイル） */
         .links-grid { 
           flex-grow: 1;
           display: grid; 
@@ -174,7 +156,6 @@ export default function Page() {
           transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
           text-decoration: none; 
           color: inherit;
-          display: block;
         }
 
         .tile-item:hover { 
@@ -187,14 +168,21 @@ export default function Page() {
         .tile-content { display: flex; align-items: center; gap: 20px; padding: 24px; }
         .icon-box { color: var(--accent); display: flex; align-items: center; }
         .tile-label { flex: 1; font-weight: bold; font-size: 1.05rem; }
-        .arrow { opacity: 0.2; transition: 0.2s; }
-        .tile-item:hover .arrow { opacity: 1; transform: translate(3px, -3px); color: var(--accent); }
+        .arrow { opacity: 0.2; }
 
-        /* モバイル対応 */
+        .footer {
+          text-align: center;
+          padding: 40px 20px;
+          color: var(--text-dim);
+          font-size: 0.85rem;
+          border-top: 1px solid var(--border);
+          background: var(--bg);
+        }
+
         @media (max-width: 850px) {
-          .main-layout { flex-direction: column; padding: 40px 16px; gap: 20px; }
+          .main-layout { flex-direction: column; padding: 40px 16px; }
           .side-content { width: 100%; position: static; }
-          .links-grid { grid-template-columns: 1fr; }
+          .links-grid { grid-template-columns: 1fr; width: 100%; }
         }
       `}</style>
     </div>
