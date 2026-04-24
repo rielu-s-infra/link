@@ -1,15 +1,15 @@
-# 📢 自己紹介
-**暁月りえる** です！
-ReactとTypeScriptでいろいろ作っています。
-お気軽にフォローしてください！
-
+#  about me
+インフラエンジニアです。  
+詳しくは公式サイトで
 # 🖼 プロフィール画像URL
 /avatar.png
 
 # 🔗 リンク
-- [GitHub](https://github.com/yourname) {icon: Github}
-- [Twitter / X](https://x.com/nameko_simakaze) {icon: Twitter}
-- [Instagram](https://instagram.com/yourname) {icon: Instagram}
-- [My Portfolio](https://example.com) {icon: Globe}
-- [Technical Blog](https://example.com/blog) {icon: BookOpenText}
-- [Contact](mailto:test@example.com) {icon: Mail}
+- [GitHub](https://github.com/penti-nameko) {icon: Github}
+- [GitHub](https://github.com/rielu-s-infra) {icon: Github}
+- [公式サイト](https://rielu.uniproject.jp) {icon: Globe}
+- [旧公式サイト](https://rieluofficial.uniproject.jp) {icon: Globe}
+- [旧リンク集サイト](https://rielulinks.uniproject.jp) {icon: Globe}
+- [wiki](https://rieluwiki.uniproject.jp) {icon: BookOpebText}
+- [Qiita](https://example.com/blog) {icon: BookOpenText}
+- [旧公式サイト](https://rielugen.uniproject.jp) {icon: Globe}
