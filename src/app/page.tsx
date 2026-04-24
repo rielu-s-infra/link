@@ -117,11 +117,11 @@ export default function Page() {
         .main-layout {
           display: flex;
           gap: 40px;
-          max-width: 1000px;
+          max-width: 1200px; /* ← 1000pxから1200pxへ広げる */
           margin: 0 auto;
-          padding: 80px 20px;
+          padding: 80px 24px;
           align-items: start;
-          flex: 1; /* コンテンツが少なくてもフッターを下に押しやる */
+          width: 100%; /* ← 追加 */
         }
 
         .side-content { 
@@ -177,9 +177,10 @@ export default function Page() {
         .news-card { background: var(--card); padding: 16px; border-radius: 16px; font-size: 0.85rem; color: var(--text-dim); border: 1px solid var(--border); border-left: 4px solid var(--accent); margin-bottom: 12px; }
 
         .links-grid { 
-          flex-grow: 1;
+          flex-grow: 1; /* 残りのスペースを全部使う */
           display: grid; 
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+          /* ここが重要：タイルの幅を少し狭めて(240px)、自動で横に並べる */
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
           gap: 16px; 
         }
 
