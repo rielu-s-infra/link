@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: rielu-links2-hpa
-  namespace: rielu-links2
+  namespace: argocd
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
