@@ -69,3 +69,27 @@ jobs:
           for tag in ${TAGS}; do
             cosign sign --yes "${tag}@${DIGEST}"
           done
+
+          - name: Trigger ArgoCD Hard Refresh and Sync
+        env:
+          ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+          ARGOCD_URL: "https://<あなたのArgoCDドメイン>"
+          APP_NAME: "rielu-links2" # ArgoCD上のアプリケーション名に合わせてください
+        run: |
+          # 1. ハードリフレッシュ（キャッシュを捨てて最新イメージを確認させる）
+          curl -k -X GET "${ARGOCD_URL}/api/v1/applications/${APP_NAME}?refresh=hard" \
+            -H "Authorization: Bearer ${ARGOCD_TOKEN}"
+
+          # 2. 同期（Podの再起動をトリガー）
+          curl -k -X POST "${ARGOCD_URL}/api/v1/applications/${APP_NAME}/sync" \
+            -H "Authorization: Bearer ${ARGOCD_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "revision": "HEAD",
+              "prune": true,
+              "strategy": {
+                "hook": {
+                  "force": true
+                }
+              }
+            }'
