@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: '/rielu-links2/',
+  base: './', // ここを '/rielu-links2/' から './' に変更
   plugins: [react()],
 })
