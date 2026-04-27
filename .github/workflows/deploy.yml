@@ -74,7 +74,7 @@ jobs:
         env:
           ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
           ARGOCD_URL: "https://argocdrielu.uniproject.jp"
-          APP_NAME: "rielu-links2"
+          APP_NAME: "rilu-links2"
         run: |
           # 1. ハードリフレッシュ（レジストリの最新イメージを強制確認）
           curl -k -X GET "${ARGOCD_URL}/api/v1/applications/${APP_NAME}?refresh=hard" \
