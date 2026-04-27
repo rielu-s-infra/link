@@ -73,7 +73,7 @@ jobs:
           - name: Trigger ArgoCD Hard Refresh and Sync
         env:
           ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
-          ARGOCD_URL: "https://<あなたのArgoCDドメイン>"
+          ARGOCD_URL: "https://argocdrielu.uniproject.jp"
           APP_NAME: "rielu-links2" # ArgoCD上のアプリケーション名に合わせてください
         run: |
           # 1. ハードリフレッシュ（キャッシュを捨てて最新イメージを確認させる）
